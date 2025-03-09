@@ -3,32 +3,27 @@ const bcrypt = require("bcrypt");
 const connection = require("../db"); // Import database connection
 const router = express.Router();
 
-// User Login Route
-router.post("/login", (req, res) => {
-    const { email, password } = req.body;
+// User registration route
+router.post("/register", async (req, res) => {
+    const { fullName, email, password, userType, graduationYear, department } = req.body;
 
-    // Check if the user exists
-    connection.query("SELECT * FROM users WHERE email = ?", [email], async (err, results) => {
-        if (err) {
-            console.error("Error during login:", err);
-            return res.status(500).json({ message: "Internal Server Error" });
+    // Hash the password before storing
+    const hashedPassword = await bcrypt.hash(password, 10);
+
+    const sql = `INSERT INTO users (full_name, email, password, user_type, graduation_year, department) 
+                 VALUES (?, ?, ?, ?, ?, ?)`;
+
+    connection.query(
+        sql,
+        [fullName, email, hashedPassword, userType, graduationYear || null, department],
+        (err, result) => {
+            if (err) {
+                console.error("Error inserting user:", err);
+                return res.status(500).json({ message: "Registration failed!" });
+            }
+            res.status(201).json({ message: "Registration successful!" });
         }
-
-        if (results.length === 0) {
-            return res.status(401).json({ message: "Invalid email or password" });
-        }
-
-        const user = results[0];
-
-        // Verify password
-        const isPasswordValid = await bcrypt.compare(password, user.password);
-        if (!isPasswordValid) {
-            return res.status(401).json({ message: "Invalid email or password" });
-        }
-
-        // Login successful
-        res.json({ message: "Login successful", redirect: "dashboard.html" });
-    });
+    );
 });
 
 module.exports = router;

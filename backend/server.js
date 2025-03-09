@@ -23,6 +23,9 @@ app.use("/api/auth", authRoutes);
 app.get("*", (req, res) => {
   res.sendFile(path.join(__dirname, "../frontend/pages/index.html"));
 });
+app.get("/pages/login.html", (req, res) => {
+  res.sendFile(path.join(__dirname, "../frontend/pages/login.html"));
+});
 
 // Start Server
 app.listen(PORT, () => {

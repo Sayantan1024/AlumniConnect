@@ -23,6 +23,17 @@ app.get("*", (req, res) => {
   res.sendFile(path.join(__dirname, "../frontend/pages/index.html"));  // FIXED PATH
 });
 
+// Show login modal
+function showLogin() {
+    document.getElementById("loginModal").style.display = "flex";
+}
+
+// Close login modal
+function closeLogin() {
+    document.getElementById("loginModal").style.display = "none";
+}
+
+
 // Start Server
 app.listen(PORT, () => {
   console.log(`🚀 Server running on http://localhost:${PORT}`);

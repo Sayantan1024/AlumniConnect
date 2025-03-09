@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login | Alumni Student Interaction Platform</title>
     <link rel="stylesheet" href="/css/login.css">
 </head>
+
 <body>
     <header>
         <div class="container">
@@ -28,10 +30,12 @@
                 <div class="login-image">
                     <div class="image-content">
                         <h2>Connect. Learn. Grow.</h2>
-                        <p>Join our alumni network and unlock opportunities for mentorship, career advancement, and lifelong connections.</p>
+                        <p>Join our alumni network and unlock opportunities for mentorship, career advancement, and
+                            lifelong connections.</p>
                     </div>
                     <div class="testimonial">
-                        <p>"The alumni platform helped me secure an internship that led to my dream job. The mentorship I received was invaluable for my career growth."</p>
+                        <p>"The alumni platform helped me secure an internship that led to my dream job. The mentorship
+                            I received was invaluable for my career growth."</p>
                         <div class="testimonial-author">
                             <div class="author-avatar">MJ</div>
                             <div class="author-info">
@@ -47,31 +51,33 @@
                         <p>Log in to access your alumni network</p>
                     </div>
 
-                    
-<form id="loginForm">
-    <div class="form-group">
-        <label for="email">Email Address</label>
-        <input type="email" id="email" class="form-control" placeholder="Enter your email" required>
-    </div>
-    <div class="form-group">
-        <label for="password">Password</label>
-        <input type="password" id="password" class="form-control" placeholder="Enter your password" required>
-    </div>
-    <div class="remember-forgot">
-        <div class="remember">
-            <input type="checkbox" id="remember">
-            <label for="remember">Remember me</label>
-        </div>
-        <a href="#" class="forgot-password">Forgot password?</a>
-    </div>
-    <button type="submit" class="btn btn-primary">Login</button>
-</form>
 
-                    
+                    <form id="loginForm">
+                        <div class="form-group">
+                            <label for="email">Email Address</label>
+                            <input type="email" id="email" class="form-control" placeholder="Enter your email" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="password">Password</label>
+                            <input type="password" id="password" class="form-control" placeholder="Enter your password"
+                                required>
+                        </div>
+                        <div class="remember-forgot">
+                            <div class="remember">
+                                <input type="checkbox" id="remember">
+                                <label for="remember">Remember me</label>
+                            </div>
+                            <a href="#" class="forgot-password">Forgot password?</a>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Login</button>
+                    </form>
+
+
                     <div class="login-divider">
                         <span>Or continue with</span>
                     </div>
-                    
+
                     <div class="social-login">
                         <a href="#" class="social-btn">
                             Google
@@ -80,7 +86,7 @@
                             LinkedIn
                         </a>
                     </div>
-                    
+
                     <div class="register-link">
                         <p>Don't have an account? <a href="register.html">Sign up</a></p>
                     </div>
@@ -105,40 +111,33 @@
     </footer>
 
     <script>
-    document.getElementById("loginForm").addEventListener("submit", async function(e) {
-        e.preventDefault();
+        document.getElementById("loginForm").addEventListener("submit", async function (e) {
+            e.preventDefault();
 
-        const formData = {
-            email: document.getElementById("email").value,
-            password: document.getElementById("password").value
-        };
+            const formData = {
+                email: document.getElementById("email").value,
+                password: document.getElementById("password").value
+            };
 
-        try {
-            const response = await fetch("http://localhost:5000/api/auth/login", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify(formData)
-            });
+            try {
+                const response = await fetch("http://localhost:5000/api/auth/login", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify(formData)
+                });
 
-            const result = await response.json();
-            alert(result.message);
+                const result = await response.json();
+                alert(result.message);
 
-            if (response.ok) {
-                localStorage.setItem("userEmail", result.email);
-                window.location.href = "dashboard.html";  // Redirect to dashboard
+                if (response.ok) {
+                    window.location.href = result.redirect;
+                }
+            } catch (error) {
+                console.error("Login Error:", error);
+                alert("Login failed. Please check your credentials.");
             }
-        } catch (error) {
-            console.error("Login Error:", error);
-            alert("Login failed. Please check your credentials.");
-        }
-    });
-</script>
-
-    
+        });
+    </script>
 </body>
+
 </html>
-
-
-
-
-

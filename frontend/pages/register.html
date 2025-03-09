@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alumni Connect - Registration</title>
+    <style>
+        :root {
+            --primary-color: #3a6ea5;
+            --secondary-color: #004e98;
+            --accent-color: #ff9505;
+            --light-gray: #f5f7fa;
+            --dark-gray: #333;
+            --white: #ffffff;
+            --success: #28a745;
+            --font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: var(--font-family);
+            background-color: var(--light-gray);
+            color: var(--dark-gray);
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            background-color: var(--white);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            padding: 20px 0;
+            position: relative;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            font-size: 24px;
+            font-weight: bold;
+            color: var(--primary-color);
+        }
+        
+        .logo-icon {
+            margin-right: 10px;
+            font-size: 28px;
+        }
+        
+        .hero {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: var(--white);
+            padding: 60px 0;
+            text-align: center;
+        }
+        
+        .hero h1 {
+            font-size: 36px;
+            margin-bottom: 20px;
+        }
+        
+        .hero p {
+            font-size: 18px;
+            max-width: 600px;
+            margin: 0 auto 30px;
+        }
+        
+        .registration-container {
+            display: flex;
+            max-width: 1000px;
+            margin: -50px auto 50px;
+            background-color: var(--white);
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+        
+        .registration-image {
+            flex: 1;
+            background-image: url('/api/placeholder/500/600');
+            background-size: cover;
+            background-position: center;
+            min-height: 400px;
+        }
+        
+        .registration-form {
+            flex: 1;
+            padding: 40px;
+        }
+        
+        .form-title {
+            font-size: 24px;
+            margin-bottom: 20px;
+            color: var(--primary-color);
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+        
+        .form-control:focus {
+            border-color: var(--primary-color);
+            outline: none;
+        }
+        
+        .radio-group {
+            display: flex;
+            gap: 20px;
+        }
+        
+        .radio-option {
+            display: flex;
+            align-items: center;
+        }
+        
+        .radio-option input {
+            margin-right: 8px;
+        }
+        
+        .btn {
+            display: inline-block;
+            background-color: var(--primary-color);
+            color: var(--white);
+            padding: 14px 28px;
+            border: none;
+            border-radius: 4px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        
+        .btn:hover {
+            background-color: var(--secondary-color);
+        }
+        
+        .btn-primary {
+            background-color: var(--primary-color);
+        }
+        
+        .btn-accent {
+            background-color: var(--accent-color);
+        }
+        
+        .info-section {
+            text-align: center;
+            padding: 60px 0;
+        }
+        
+        .info-section h2 {
+            font-size: 32px;
+            margin-bottom: 30px;
+            color: var(--primary-color);
+        }
+        
+        .benefits {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            margin-top: 40px;
+        }
+        
+        .benefit-card {
+            flex: 0 0 30%;
+            background-color: var(--white);
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            margin-bottom: 30px;
+            text-align: center;
+            transition: transform 0.3s;
+        }
+        
+        .benefit-card:hover {
+            transform: translateY(-10px);
+        }
+        
+        .benefit-icon {
+            font-size: 36px;
+            color: var(--primary-color);
+            margin-bottom: 15px;
+        }
+        
+        .benefit-card h3 {
+            font-size: 20px;
+            margin-bottom: 15px;
+            color: var(--primary-color);
+        }
+        
+        footer {
+            background-color: var(--secondary-color);
+            color: var(--white);
+            padding: 20px 0;
+            text-align: center;
+        }
+        
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .registration-container {
+                flex-direction: column;
+            }
+            
+            .registration-image {
+                min-height: 200px;
+            }
+            
+            .benefit-card {
+                flex: 0 0 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="logo">
+                <span class="logo-icon">🎓</span> AlumniConnect
+            </div>
+        </div>
+    </header>
+    
+    <section class="hero">
+        <div class="container">
+            <h1>Join Our Alumni Network</h1>
+            <p>Connect with students, share experiences, and help shape the next generation of professionals.</p>
+        </div>
+    </section>
+    
+    <div class="container">
+        <div class="registration-container">
+            <div class="registration-image"></div>
+            <div class="registration-form">
+                <h2 class="form-title">Create Your Account</h2>
+                <form id="registrationForm">
+                    <div class="form-group">
+                        <label for="fullName">Full Name</label>
+                        <input type="text" id="fullName" class="form-control" placeholder="Enter your full name" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="email">Email Address</label>
+                        <input type="email" id="email" class="form-control" placeholder="Enter your email" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="password">Password</label>
+                        <input type="password" id="password" class="form-control" placeholder="Create a password" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>I am a:</label>
+                        <div class="radio-group">
+                            <div class="radio-option">
+                                <input type="radio" id="alumni" name="userType" value="alumni" checked>
+                                <label for="alumni">Alumni</label>
+                            </div>
+                            <div class="radio-option">
+                                <input type="radio" id="student" name="userType" value="student">
+                                <label for="student">Current Student</label>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group" id="graduationYearGroup">
+                        <label for="graduationYear">Graduation Year</label>
+                        <input type="number" id="graduationYear" class="form-control" placeholder="Year of graduation" min="1900" max="2030">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="department">Department/Major</label>
+                        <input type="text" id="department" class="form-control" placeholder="Enter your department or major" required>
+                    </div>
+                    
+                    <button type="submit" class="btn btn-primary">Register Now</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    
+    <section class="info-section">
+        <div class="container">
+            <h2>Why Join Our Alumni Network?</h2>
+            <div class="benefits">
+                <div class="benefit-card">
+                    <div class="benefit-icon">🤝</div>
+                    <h3>Networking</h3>
+                    <p>Connect with alumni and students from your field and expand your professional network.</p>
+                </div>
+                <div class="benefit-card">
+                    <div class="benefit-icon">💼</div>
+                    <h3>Career Opportunities</h3>
+                    <p>Access exclusive job postings, internships, and career advancement opportunities.</p>
+                </div>
+                <div class="benefit-card">
+                    <div class="benefit-icon">🧠</div>
+                    <h3>Mentorship</h3>
+                    <p>Share your expertise or receive guidance from experienced professionals in your field.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 AlumniConnect. All rights reserved.</p>
+        </div>
+    </footer>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const form = document.getElementById('registrationForm');
+            const userTypeRadios = document.getElementsByName('userType');
+            const graduationYearGroup = document.getElementById('graduationYearGroup');
+            
+            // Show/hide graduation year based on user type
+            for (let i = 0; i < userTypeRadios.length; i++) {
+                userTypeRadios[i].addEventListener('change', function() {
+                    if (this.value === 'alumni') {
+                        graduationYearGroup.style.display = 'block';
+                    } else {
+                        graduationYearGroup.style.display = 'none';
+                    }
+                });
+            }
+            
+            // Form submission
+            form.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                // Collect form data
+                const formData = {
+                    fullName: document.getElementById('fullName').value,
+                    email: document.getElementById('email').value,
+                    password: document.getElementById('password').value,
+                    userType: document.querySelector('input[name="userType"]:checked').value,
+                    graduationYear: document.getElementById('graduationYear').value,
+                    department: document.getElementById('department').value
+                };
+                
+                // Here you would typically send this data to your server
+                console.log('Form submitted with data:', formData);
+                
+                // Show success message (in a real app, you'd do this after successful API response)
+                alert('Registration successful! You can now log in to your account.');
+                form.reset();
+            });
+        });
+    </script>
+</body>
+</html>

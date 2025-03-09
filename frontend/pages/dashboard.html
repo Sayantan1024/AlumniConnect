@@ -3,62 +3,61 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>User Dashboard</title>
-    <link rel="stylesheet" href="/frontend/css/dashboard.css">
-
+    <title>Dashboard | Alumni Portal</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <aside class="sidebar">
-        <h2>User Dashboard</h2>
-        <ul>
-            <li><a href="#appointments">Upcoming Events</a></li>
-            <li><a href="#session-history">Job Opportunities</a></li>
-            <li><a href="#practice">Practice</a></li>
-            <li><a href="#medical-history">Medical History</a></li>
-            <li><a href="#messages">Messages</a></li>
-            <li><a href="#profile">Profile Settings</a></li>
-            <li><a href="logout.html">Logout</a></li>
-        </ul>
-    </aside>
-    
-    <main class="content">
-        <section class="welcome-section">
-            <img src="profile.jpg" alt="Profile Picture" class="profile-pic">
-            <div>
-                <h1>Welcome, [User Name]</h1>
-                <p>Your journey starts here.</p>
-            </div>
-        </section>
+    <div class="dashboard-container">
+        <h2>Welcome, <span id="userName"></span></h2>
+        <p>Email: <span id="userEmail"></span></p>
 
-        <section id="appointments">
-            <h2>Upcoming Events</h2>
-            <a href="/book-session">See events </a>
-        </section>
+        <h3>Your Information:</h3>
+       
 
-        <section id="session-history">
-            <h2>Job Opportunities</h2>
-            <a href="/session-history">see Job-Opportunities</Search></a>
-        </section>
+        <button onclick="logout()">Logout</button>
+    </div>
 
-        <section id="practice">
-            <h2>Practice Videos</h2>
-            <a href="practice_video.html">Start Practice</a>
-        </section>
+    <script>
+        document.addEventListener("DOMContentLoaded", async function() {
+            const userEmail = localStorage.getItem("userEmail");
 
-        <section id="medical-history">
-            <h2>Reports & Analytics</h2>
-            <a href="/reports">View past diagnoses and reports</a>
-        </section>
+            if (!userEmail) {
+                alert("Unauthorized Access! Please login.");
+                window.location.href = "login.html";
+                return;
+            }
 
-        <section id="messages">
-            <h2>Chat with Boat</h2>
-            <a href="index.html">Start a conversation with Boat</a>
-        </section>
+            document.getElementById("userEmail").textContent = userEmail;
+            document.getElementById("userName").textContent = localStorage.getItem("full_name");
 
-        <section id="profile">
-            <h2>Profile Settings</h2>
-            <a href="/user-details">See your personal details</a>
-        </section>
-    </main>
+            try {
+                const response = await fetch(`http://localhost:5000/api/users/${userEmail}`);
+                const data = await response.json();
+
+                if (response.ok) {
+                    const userInfoTable = document.getElementById("userInfo");
+                    userInfoTable.innerHTML = "";
+
+                    Object.entries(data).forEach(([key, value]) => {
+                        if (key !== "password") {  // Hide password
+                            const row = `<tr><td>${key}</td><td>${value}</td></tr>`;
+                            userInfoTable.innerHTML += row;
+                        }
+                    });
+                } else {
+                    console.error("Failed to fetch user data");
+                }
+            } catch (error) {
+                console.error("Error fetching user data:", error);
+            }
+        });
+
+        function logout() {
+            localStorage.removeItem("userEmail");
+            localStorage.removeItem("full_name");
+            alert("You have logged out.");
+            window.location.href = "login.html";
+        }
+    </script>
 </body>
 </html>

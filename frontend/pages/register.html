@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Alumni Connect - Registration</title>
-   <link rel="stylesheet" href="/frontend/css/register.css">
+   <link rel="stylesheet" href="/css/register.css">
 </head>
 <body>
     <header>
@@ -69,6 +69,11 @@
                     
                     <button type="submit" class="btn btn-primary">Register Now</button>
                 </form>
+
+
+
+
+
             </div>
         </div>
     </div>
@@ -102,45 +107,55 @@
         </div>
     </footer>
     
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const form = document.getElementById('registrationForm');
-            const userTypeRadios = document.getElementsByName('userType');
-            const graduationYearGroup = document.getElementById('graduationYearGroup');
-            
-            // Show/hide graduation year based on user type
-            for (let i = 0; i < userTypeRadios.length; i++) {
-                userTypeRadios[i].addEventListener('change', function() {
-                    if (this.value === 'alumni') {
-                        graduationYearGroup.style.display = 'block';
-                    } else {
-                        graduationYearGroup.style.display = 'none';
-                    }
-                });
-            }
-            
-            // Form submission
-            form.addEventListener('submit', function(e) {
-                e.preventDefault();
-                
-                // Collect form data
-                const formData = {
-                    fullName: document.getElementById('fullName').value,
-                    email: document.getElementById('email').value,
-                    password: document.getElementById('password').value,
-                    userType: document.querySelector('input[name="userType"]:checked').value,
-                    graduationYear: document.getElementById('graduationYear').value,
-                    department: document.getElementById('department').value
-                };
-                
-                // Here you would typically send this data to your server
-                console.log('Form submitted with data:', formData);
-                
-                // Show success message (in a real app, you'd do this after successful API response)
-                alert('Registration successful! You can now log in to your account.');
-                form.reset();
+   
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const form = document.getElementById('registrationForm');
+    
+        // Show/hide graduation year based on user type
+        document.querySelectorAll('input[name="userType"]').forEach(radio => {
+            radio.addEventListener('change', function() {
+                document.getElementById('graduationYearGroup').style.display =
+                    this.value === 'alumni' ? 'block' : 'none';
             });
         });
+    
+        // Handle form submission
+        form.addEventListener('submit', async function(e) {
+            e.preventDefault();
+    
+            const formData = {
+                fullName: document.getElementById('fullName').value,
+                email: document.getElementById('email').value,
+                password: document.getElementById('password').value,
+                userType: document.querySelector('input[name="userType"]:checked').value,
+                graduationYear: document.getElementById('graduationYear').value || null,
+                department: document.getElementById('department').value
+            };
+    
+            try {
+                const response = await fetch("http://localhost:5000/api/users/register", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify(formData)
+                });
+    
+                const result = await response.json();
+                alert(result.message);
+                if (response.ok) form.reset();
+            } catch (error) {
+                console.error("Error during registration:", error);
+                alert("Registration failed. Please try again.");
+            }
+        });
+    });
     </script>
 </body>
 </html>
+
+
+
+
+
+
+

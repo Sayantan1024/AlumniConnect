@@ -1,28 +1,37 @@
 const express = require("express");
+const bcrypt = require("bcrypt");
+const connection = require("../db"); // Import database connection
 const router = express.Router();
-const db = require("../config/db");  // Import database connection
 
-// Get all users
-router.get("/", (req, res) => {
-  db.query("SELECT id, name, email, role FROM users", (err, results) => {
-    if (err) {
-      return res.status(500).json({ error: err.message });
+// User registration route
+router.post("/register", async (req, res) => {
+    const { fullName, email, password, userType, graduationYear, department } = req.body;
+
+    try {
+        // Hash the password before storing
+        const hashedPassword = await bcrypt.hash(password, 10);
+
+        const sql = `INSERT INTO users (full_name, email, password, user_type, graduation_year, department) 
+                     VALUES (?, ?, ?, ?, ?, ?)`;
+
+        connection.query(
+            sql,
+            [fullName, email, hashedPassword, userType, graduationYear || null, department],
+            (err, result) => {
+                if (err) {
+                    console.error("Error inserting user:", err);
+                    return res.status(500).json({ message: "Registration failed!" });
+                }
+                res.status(201).json({ 
+                    message: "Registration successful!", 
+                    redirect: "login.html" 
+                });
+            }
+        );
+    } catch (error) {
+        console.error("Error hashing password:", error);
+        res.status(500).json({ message: "Internal server error" });
     }
-    res.json(results);
-  });
 });
 
-// User registration
-router.post("/register", (req, res) => {
-  const { name, email, password, role } = req.body;
-  const sql = "INSERT INTO users (name, email, password, role) VALUES (?, ?, ?, ?)";
-  
-  db.query(sql, [name, email, password, role], (err, result) => {
-    if (err) {
-      return res.status(500).json({ error: err.message });
-    }
-    res.json({ message: "User registered successfully!" });
-  });
-});
-
-module.exports = router;  // Ensure you're exporting only 'router'
+module.exports = router;

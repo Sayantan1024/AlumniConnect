@@ -11,23 +11,46 @@ router.post("/register", async (req, res) => {
         // Hash the password before storing
         const hashedPassword = await bcrypt.hash(password, 10);
 
-        const sql = `INSERT INTO users (full_name, email, password, user_type, graduation_year, department) 
-                     VALUES (?, ?, ?, ?, ?, ?)`;
+        if(userType === "alumni") {
+            const sql = `INSERT INTO alumni (username, email, password, grad_year, dept) 
+                     VALUES (?, ?, ?, ?, ?)`;
 
-        connection.query(
-            sql,
-            [fullName, email, hashedPassword, userType, graduationYear || null, department],
-            (err, result) => {
-                if (err) {
-                    console.error("Error inserting user:", err);
-                    return res.status(500).json({ message: "Registration failed!" });
+            connection.query(
+                sql,
+                [fullName, email, hashedPassword, graduationYear || null, department],
+                (err, result) => {
+                    if (err) {
+                        console.error("Error inserting user:", err);
+                        return res.status(500).json({ message: "Registration failed!" });
+                    }
+                    res.status(201).json({ 
+                        message: "Registration successful!", 
+                        redirect: "/pages/login.html" 
+                    });
                 }
-                res.status(201).json({ 
-                    message: "Registration successful!", 
-                    redirect: "login.html" 
-                });
-            }
-        );
+            );
+        }
+        else if(userType === "student") {
+            const sql = `INSERT INTO students (username, email, password, dept) 
+                     VALUES (?, ?, ?, ?)`;
+
+            connection.query(
+                sql,
+                [fullName, email, hashedPassword || null, department],
+                (err, result) => {
+                    if (err) {
+                        console.error("Error inserting user:", err);
+                        return res.status(500).json({ message: "Registration failed!" });
+                    }
+                    res.status(201).json({ 
+                        message: "Registration successful!", 
+                        redirect: "/pages/login.html" 
+                    });
+                }
+            );
+        }
+
+        
     } catch (error) {
         console.error("Error hashing password:", error);
         res.status(500).json({ message: "Internal server error" });

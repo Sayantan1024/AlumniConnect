@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Alumni Connect - Registration</title>
-   <link rel="stylesheet" href="/css/register.css">
+   <link rel="stylesheet" href="../css/register.css">
 </head>
 <body>
     <header>
@@ -134,7 +134,7 @@
             };
     
             try {
-                const response = await fetch("http://localhost:5000/api/users/register", {
+                const response = await fetch("http://localhost:3000/api/users/register", {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
                     body: JSON.stringify(formData)
@@ -142,7 +142,11 @@
     
                 const result = await response.json();
                 alert(result.message);
-                if (response.ok) form.reset();
+                if (response.ok) {
+                    form.reset();
+                    window.location.href="./login.html"
+                }
+                
             } catch (error) {
                 console.error("Error during registration:", error);
                 alert("Registration failed. Please try again.");

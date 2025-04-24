@@ -182,29 +182,30 @@ nav ul li a:hover {
     color: var(--gray);
 }
 
-.input-group {
-    margin-bottom: 1.5rem;
+.form-group {
+    margin-bottom: 0.5rem;
+    display: flex;
+    flex-direction: column;
 }
 
-.input-group label {
-    display: block;
+.form-group label {
     margin-bottom: 0.5rem;
     font-weight: 600;
-    color: var(--primary);
+    color: #333;
 }
 
-.input-field {
-    width: 100%;
-    padding: 0.8rem 1rem;
-    border: 1px solid var(--gray-light);
-    border-radius: 5px;
+.form-group input.form-control {
+    padding: 0.6rem;
+    border: 1px solid #ccc;
+    border-radius: 6px;
     font-size: 1rem;
-    transition: border-color 0.3s;
+    transition: border-color 0.3s ease;
+    outline: none;
 }
 
-.input-field:focus {
-    outline: none;
-    border-color: var(--accent);
+.form-group input.form-control:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.15);
 }
 
 .remember-forgot {

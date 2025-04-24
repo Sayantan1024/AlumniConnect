@@ -1,12 +1,14 @@
+const dotenv = require("dotenv")
 const express = require("express");
 const cors = require("cors");
 const bodyParser = require("body-parser");
 const path = require("path");
 const userRoutes = require("./routes/userRoutes");
 const authRoutes = require("./routes/authRoutes");
+dotenv.config()
 
 const app = express();
-const PORT = 5000;
+const PORT = process.env.PORT;
 
 // Middleware
 app.use(cors());
@@ -28,6 +30,6 @@ app.get("/pages/login.html", (req, res) => {
 });
 
 // Start Server
-app.listen(PORT, () => {
+app.listen(process.env.PORT, () => {
   console.log(`🚀 Server running on http://localhost:${PORT}`);
 });

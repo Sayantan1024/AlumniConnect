@@ -116,6 +116,10 @@ header {
     padding: 20px 0;
 }
 
+.links {
+    padding-top: 10px;
+}
+
 .logo {
     font-size: 24px;
     font-weight: 700;

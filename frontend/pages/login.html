@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login | Alumni Student Interaction Platform</title>
-    <link rel="stylesheet" href="/css/login.css">
+    <link rel="stylesheet" href="../css/login.css">
 </head>
 
 <body>
@@ -16,8 +16,6 @@
                 <div class="logo">Alumni<span>Connect</span></div>
                 <nav>
                     <ul>
-                        <li><a href="index.html">Home</a></li>
-                        <li><a href="about.html">About</a></li>
                         <li><a href="#">Contact</a></li>
                     </ul>
                 </nav>
@@ -61,8 +59,7 @@
 
                         <div class="form-group">
                             <label for="password">Password</label>
-                            <input type="password" id="password" class="form-control" placeholder="Enter your password"
-                                required>
+                            <input type="password" id="password" class="form-control" placeholder="Enter your password" required>
                         </div>
                         <div class="remember-forgot">
                             <div class="remember">
@@ -121,7 +118,7 @@
             };
 
             try {
-                const response = await fetch("http://localhost:5000/api/auth/login", {
+                const response = await fetch("http://localhost:3000/api/auth/login", {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
                     body: JSON.stringify(formData)
@@ -131,7 +128,7 @@
                 alert(result.message);
 
                 if (response.ok) {
-                    window.location.href = result.redirect;
+                    window.location.href = "./index.html";
                 }
             } catch (error) {
                 console.error("Login Error:", error);

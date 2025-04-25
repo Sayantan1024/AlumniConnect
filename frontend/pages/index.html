@@ -18,7 +18,10 @@
                     <li class="links"><a href="#features">Features</a></li>
                     <li class="links"><a href="./jobs.html">How It Works</a></li>
                     <li class="links"><a href="#testimonials">Success Stories</a></li>
-                    <li><a href="./login.html" class="btn btn-primary">Get Started</a></li>
+                    <li id="authButtonContainer">
+                        <a href="./login.html" id="authButton" class="btn btn-primary">Get Started</a>
+                    </li>
+                    
                 </ul>
                 <div class="mobile-menu">☰</div>
             </nav>
@@ -261,5 +264,27 @@
             </div>
         </div>
     </footer>
+
+    <script>
+        // Check login status on page load
+        document.addEventListener("DOMContentLoaded", function () {
+            const authButton = document.getElementById("authButton");
+            const isLoggedIn = localStorage.getItem("isLoggedIn");
+    
+            if (isLoggedIn === "true") {
+                authButton.textContent = "Logout";
+                authButton.href = "#";
+                authButton.classList.add("btn-danger");
+                authButton.classList.remove("btn-primary");
+    
+                authButton.addEventListener("click", function (e) {
+                    e.preventDefault();
+                    localStorage.removeItem("isLoggedIn");
+                    location.reload(); // Refresh page to show "Get Started" again
+                });
+            }
+        });
+    </script>
+    
 </body>
 </html>

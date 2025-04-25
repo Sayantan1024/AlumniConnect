@@ -23,7 +23,7 @@ router.post("/register", async (req, res) => {
                         console.error("Error inserting user:", err);
                         return res.status(500).json({ message: "Registration failed!" });
                     }
-                    res.status(201).json({ 
+                    return res.status(201).json({ 
                         message: "Registration successful!", 
                         redirect: "/pages/login.html" 
                     });
@@ -42,7 +42,7 @@ router.post("/register", async (req, res) => {
                         console.error("Error inserting user:", err);
                         return res.status(500).json({ message: "Registration failed!" });
                     }
-                    res.status(201).json({ 
+                    return res.status(201).json({ 
                         message: "Registration successful!", 
                         redirect: "/pages/login.html" 
                     });

@@ -19,7 +19,11 @@ router.post("/login", (req, res) => {
             const user = results[0];
             const match = await bcrypt.compare(password, user.password);
             if (match) {
-                return res.status(200).json({ message: "Alumni login successful", userType: "alumni" }).redirect("/pages/index.html");
+                return res.status(200).json({ 
+                    message: "Alumni login successful", 
+                    userType: "alumni",
+                    redirect: "/pages/index.html"
+                });
                 
             } else {
                 return res.status(401).json({ message: "Invalid password" });
@@ -38,7 +42,11 @@ router.post("/login", (req, res) => {
                 const student = studentResults[0];
                 const match = await bcrypt.compare(password, student.password);
                 if (match) {
-                    return res.status(200).json({ message: "Student login successful", userType: "student" }).redirect("/pages/index.html");
+                    return res.status(200).json({ 
+                        message: "Student login successful", 
+                        userType: "student",
+                        redirect: "/pages/index.html"
+                     });
                 } else {
                     return res.status(401).json({ message: "Invalid password" });
                 }
